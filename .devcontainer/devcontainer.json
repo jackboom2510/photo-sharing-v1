@@ -1,0 +1,10 @@
+{
+  "name": "photo-sharing-v1 (Node 20)",
+  "image": "mcr.microsoft.com/devcontainers/javascript-node:20",
+  "postCreateCommand": "npm run install:all && node scripts/ensure-env.js",
+  "customizations": {
+    "vscode": {
+      "extensions": ["dbaeumer.vscode-eslint"]
+    }
+  }
+}

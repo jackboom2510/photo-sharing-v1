@@ -1,0 +1,44 @@
+{
+  "$schema": "https://codesandbox.io/schemas/tasks.json",
+  "setupTasks": [
+    {
+      "name": "Install monorepo dependencies",
+      "command": "npm run install:all"
+    },
+    {
+      "name": "Create .env from .env.example",
+      "command": "node scripts/ensure-env.js"
+    }
+  ],
+  "tasks": {
+    "dev": {
+      "name": "Dev: API + React",
+      "command": "HOST=0.0.0.0 npm run dev",
+      "runAtStart": true,
+      "preview": {
+        "port": 3000,
+        "prLink": "direct"
+      }
+    },
+    "backend": {
+      "name": "API only (Express)",
+      "command": "npm run start:backend",
+      "preview": {
+        "port": 8080,
+        "prLink": "direct"
+      }
+    },
+    "frontend": {
+      "name": "React only (CRA)",
+      "command": "HOST=0.0.0.0 npm run start:frontend",
+      "preview": {
+        "port": 3000,
+        "prLink": "direct"
+      }
+    },
+    "build": {
+      "name": "Build frontend",
+      "command": "npm run build"
+    }
+  }
+}
