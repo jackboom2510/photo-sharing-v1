@@ -34,7 +34,8 @@ const App = () => {
                   <Route index element={<UserDetail />} />
                 </Route>
                 <Route path="/photos/:userId" element={<UserLayout />}>
-                  <Route index element={<UserPhotos />} />
+                    <Route index element={<UserPhotos />} />
+                    <Route path=":photoIndex" element={<UserPhotos />} />
                 </Route>
                 <Route path="/users" element={<UserList />} />
               </Routes>
