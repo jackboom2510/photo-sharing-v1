@@ -63,7 +63,7 @@
   .topbar-subtitle {
     font-size: 1rem;
     text-align: right;
-    max-width: 52%;
+    max-width: 100%;
     -webkit-line-clamp: 1;
   }
 }
