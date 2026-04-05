@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { AppBar, Toolbar, Typography } from "@mui/material";
+import { AppBar, Toolbar, Typography, Stack } from "@mui/material";
 import { useLocation } from "react-router-dom";
 import { api } from "../../lib/fetchModelData";
 
@@ -31,13 +31,29 @@ function TopBar() {
     };
   }, [userId]);
 
+  const subtitle = user
+    ? `${isPhotos ? "Photos of " : ""}${user.first_name} ${user.last_name}`
+    : "";
+
   return (
-    <AppBar className="topbar-appBar" position="absolute">
-      <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
-        <Typography variant="h6">Photo Sharing App</Typography>
-        <Typography variant="h6">
-          {user ? `${isPhotos ? "Photos of " : ""}${user.first_name} ${user.last_name}` : ""}
-        </Typography>
+    <AppBar position="fixed" elevation={2} className="topbar-app-bar">
+      <Toolbar disableGutters className="topbar-toolbar">
+        <Stack
+          direction={{ xs: "column", sm: "row" }}
+          spacing={{ xs: 0.25, sm: 2 }}
+          alignItems={{ xs: "stretch", sm: "center" }}
+          justifyContent="space-between"
+          className="topbar-stack"
+        >
+          <Typography variant="h6" component="div" className="topbar-title">
+            Photo Sharing App
+          </Typography>
+          {subtitle ? (
+            <Typography variant="subtitle1" component="div" className="topbar-subtitle">
+              {subtitle}
+            </Typography>
+          ) : null}
+        </Stack>
       </Toolbar>
     </AppBar>
   );

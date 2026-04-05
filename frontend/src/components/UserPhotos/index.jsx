@@ -14,6 +14,8 @@ import { useParams, Link } from "react-router-dom";
 import DOMPurify from "dompurify";
 import { api, photoImageUrl } from "../../lib/fetchModelData";
 
+import "./styles.css";
+
 export default function UserPhotos() {
   const { userId } = useParams();
   const [photos, setPhotos] = useState([]);
@@ -45,7 +47,7 @@ export default function UserPhotos() {
 
   if (loading) {
     return (
-      <Paper elevation={3} sx={{ p: 4, borderRadius: 2, display: "flex", justifyContent: "center", minHeight: 200 }}>
+      <Paper elevation={3} className="user-photos-paper--centered">
         <CircularProgress />
       </Paper>
     );
@@ -53,15 +55,15 @@ export default function UserPhotos() {
 
   if (error) {
     return (
-      <Paper elevation={3} sx={{ p: 4, borderRadius: 2 }}>
+      <Paper elevation={3} className="user-photos-paper--error">
         <Typography color="error">Không tải được ảnh: {error.message}</Typography>
       </Paper>
     );
   }
 
   return (
-    <Paper elevation={3} sx={{ p: 4, borderRadius: 2, height: "100%", display: "flex", flexDirection: "column", gap: 3 }}>
-      <Typography variant="h5" fontWeight="medium" gutterBottom>
+    <Paper elevation={3} className="user-photos-root">
+      <Typography variant="h5" fontWeight="medium" gutterBottom className="user-photos-heading">
         Photos
       </Typography>
 
@@ -70,36 +72,35 @@ export default function UserPhotos() {
           No photos available.
         </Typography>
       ) : (
-        <Box sx={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))", gap: 3 }}>
+        <Box className="user-photos-grid">
           {photos.map((photo) => (
-            <Card key={photo._id} sx={{ display: "flex", flexDirection: "column", height: "100%" }}>
+            <Card key={photo._id} className="user-photos-card">
               <CardMedia
                 component="img"
-                height="200"
                 image={photoImageUrl(photo.file_name)}
                 alt="User uploaded photo"
-                sx={{ objectFit: "cover" }}
+                className="user-photos-card-media"
               />
-              <CardContent sx={{ flexGrow: 1, display: "flex", flexDirection: "column", gap: 1 }}>
+              <CardContent className="user-photos-card-content">
                 <Typography variant="caption" color="text.secondary">
                   Uploaded on: {new Date(photo.date_time).toLocaleDateString()}
                 </Typography>
-                <Divider sx={{ my: 1 }} />
+                <Divider className="user-photos-divider" />
 
                 <Typography variant="subtitle2">
                   Comments ({photo.comments?.length || 0})
                 </Typography>
 
                 {photo.comments && photo.comments.length > 0 ? (
-                  <Box sx={{ display: "flex", flexDirection: "column", gap: 1, mt: 1 }}>
+                  <Box className="user-photos-comments">
                     {photo.comments.map((c) => (
-                      <Box key={c._id} sx={{ display: "flex", gap: 1, alignItems: "flex-start" }}>
-                        <Avatar sx={{ width: 24, height: 24, fontSize: "0.75rem" }}>
+                      <Box key={c._id} className="user-photos-comment-row">
+                        <Avatar className="user-photos-comment-avatar">
                           {c.user?.first_name?.[0] ?? "?"}
                         </Avatar>
                         <Box>
                           <Typography variant="body2" fontWeight="bold">
-                            <Link to={`/users/${c.user?._id}`} style={{ textDecoration: "none", color: "inherit" }}>
+                            <Link to={`/users/${c.user?._id}`} className="user-photos-comment-link">
                               {c.user ? `${c.user.first_name} ${c.user.last_name}` : "Unknown"}
                             </Link>
                           </Typography>

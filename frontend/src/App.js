@@ -1,4 +1,4 @@
-import './App.css';
+import "./App.css";
 
 import React from "react";
 import { Box, Grid, Paper } from "@mui/material";
@@ -8,40 +8,42 @@ import TopBar from "./components/TopBar";
 import UserDetail from "./components/UserDetail";
 import UserList from "./components/UserList";
 import UserPhotos from "./components/UserPhotos";
-import UserLayout from './components/UserLayout';
+import UserLayout from "./components/UserLayout";
 
-const App = (props) => {
+const App = () => {
   return (
-      <Router>
-        <div>
-          <Grid container spacing={2}>
-            <Grid item xs={12}>
-              <TopBar />
-            </Grid>
-            <div className="main-topbar-buffer" />
-            <Grid item sm={3}>
-              <Paper className="main-grid-item">
-                <UserList />
-              </Paper>
-            </Grid>
-            <Grid item sm={9}>
-              <Paper className="main-grid-item">
-                <Routes>
-                  <Route path="/" element={<Box sx={{ height: "100%" }} />} />
-                  <Route path="/users/:userId" element={<UserLayout />}>
-                    <Route index element={<UserDetail />} />
-                  </Route>
-                  <Route path="/photos/:userId" element={<UserLayout />}>
-                    <Route index element={<UserPhotos />} />
-                  </Route>
-                  <Route path="/users" element={<UserList />} />
-                </Routes>
-              </Paper>
-            </Grid>
+    <Router>
+      <div className="app-root">
+        <TopBar />
+        <Grid
+          container
+          columnSpacing={{ xs: 0, md: 2 }}
+          rowSpacing={{ xs: 1, md: 2 }}
+          className="app-grid-container"
+        >
+          <Grid item xs={12} md={3} className="app-grid-item--stretch">
+            <Paper className="main-grid-item app-sidebar-paper" elevation={2}>
+              <UserList />
+            </Paper>
           </Grid>
-        </div>
-      </Router>
+          <Grid item xs={12} md={9} className="app-grid-item--stretch">
+            <Box className="main-grid-item app-main-surface">
+              <Routes>
+                <Route path="/" element={<Box className="app-route-placeholder" />} />
+                <Route path="/users/:userId" element={<UserLayout />}>
+                  <Route index element={<UserDetail />} />
+                </Route>
+                <Route path="/photos/:userId" element={<UserLayout />}>
+                  <Route index element={<UserPhotos />} />
+                </Route>
+                <Route path="/users" element={<UserList />} />
+              </Routes>
+            </Box>
+          </Grid>
+        </Grid>
+      </div>
+    </Router>
   );
-}
+};
 
 export default App;

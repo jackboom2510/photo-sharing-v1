@@ -1,0 +1,105 @@
+/* Khớp sx UserLayout: gap 2/3, header Paper p 2/3 borderRadius 2, breadcrumbs mb 1.5, title fontSize, FormControl width */
+
+.user-layout-message {
+  padding: 32px;
+  text-align: center;
+}
+
+.user-layout-loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 240px;
+}
+
+.user-layout-root {
+  max-width: 1000px;
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  min-height: auto;
+}
+
+@media (min-width: 600px) {
+  .user-layout-root {
+    gap: 24px;
+  }
+}
+
+@media (min-width: 900px) {
+  .user-layout-root {
+    min-height: min(100vh, 100%);
+  }
+}
+
+.user-layout-header-paper {
+  padding: 16px;
+  border-radius: 8px;
+}
+
+@media (min-width: 600px) {
+  .user-layout-header-paper {
+    padding: 24px;
+  }
+}
+
+.user-layout-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: stretch;
+  flex-direction: column;
+  gap: 16px;
+}
+
+@media (min-width: 600px) {
+  .user-layout-header-row {
+    align-items: center;
+    flex-direction: row;
+  }
+}
+
+.user-layout-header-text {
+  min-width: 0;
+}
+
+.user-layout-breadcrumbs {
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+}
+
+.user-layout-breadcrumbs .MuiBreadcrumbs-separator {
+  margin-left: 4px;
+  margin-right: 4px;
+}
+
+.user-layout-title {
+  font-size: 1.5rem;
+  word-break: break-word;
+}
+
+@media (min-width: 600px) {
+  .user-layout-title {
+    font-size: 2rem;
+  }
+}
+
+.user-layout-mode {
+  min-width: 100%;
+  max-width: 100%;
+}
+
+@media (min-width: 600px) {
+  .user-layout-mode {
+    min-width: 200px;
+    max-width: 280px;
+  }
+}
+
+.user-layout-outlet {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}

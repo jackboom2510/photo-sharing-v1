@@ -1,0 +1,68 @@
+/* Khớp sx UserList: p 4 loading, p 2 error, intro display none xs, mb 1, text.secondary */
+
+.user-list-loading {
+  display: flex;
+  justify-content: center;
+  padding: 32px;
+}
+
+.user-list-error {
+  padding: 16px;
+}
+
+.user-list-root {
+  width: 100%;
+  max-width: 100%;
+}
+
+.user-list-intro {
+  display: none;
+  margin-bottom: 8px;
+  color: rgba(0, 0, 0, 0.6);
+}
+
+@media (min-width: 600px) {
+  .user-list-intro {
+    display: block;
+  }
+}
+
+.user-list-nav {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+.user-list-item {
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+@media (min-width: 600px) {
+  .user-list-item {
+    padding-left: 8px;
+    padding-right: 8px;
+  }
+}
+
+.user-list-link {
+  text-decoration: none;
+  color: inherit;
+  width: 100%;
+}
+
+.user-list-primary {
+  font-size: 0.95rem;
+}
+
+@media (min-width: 600px) {
+  .user-list-primary {
+    font-size: 1rem;
+  }
+}
+
+.user-list-footer {
+  display: block;
+  margin-top: 8px;
+  color: rgba(0, 0, 0, 0.6);
+  word-break: break-word;
+}

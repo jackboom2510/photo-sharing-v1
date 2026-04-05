@@ -13,6 +13,8 @@ import {
 } from "@mui/material";
 import { api } from "../../lib/fetchModelData";
 
+import "./styles.css";
+
 export default function UserLayout() {
   const { userId } = useParams();
   const navigate = useNavigate();
@@ -52,7 +54,7 @@ export default function UserLayout() {
 
   if (!userId) {
     return (
-      <Box sx={{ p: 4, textAlign: "center" }}>
+      <Box className="user-layout-message">
         <Typography variant="h5">Thiếu user ID</Typography>
       </Box>
     );
@@ -60,7 +62,7 @@ export default function UserLayout() {
 
   if (loading) {
     return (
-      <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center", minHeight: 240 }}>
+      <Box className="user-layout-loading">
         <CircularProgress />
       </Box>
     );
@@ -68,7 +70,7 @@ export default function UserLayout() {
 
   if (error || !user) {
     return (
-      <Box sx={{ p: 4, textAlign: "center" }}>
+      <Box className="user-layout-message">
         <Typography variant="h5" gutterBottom>
           User not found
         </Typography>
@@ -94,11 +96,14 @@ export default function UserLayout() {
   };
 
   return (
-    <Box sx={{ maxWidth: 1000, mx: "auto", p: 3, display: "flex", flexDirection: "column", gap: 3, minHeight: "100vh" }}>
-      <Paper elevation={3} sx={{ p: 3, borderRadius: 2 }}>
-        <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 2 }}>
-          <Box>
-            <Breadcrumbs aria-label="breadcrumb" sx={{ mb: 2 }}>
+    <Box className="user-layout-root">
+      <Paper elevation={3} className="user-layout-header-paper">
+        <Box className="user-layout-header-row">
+          <Box className="user-layout-header-text">
+            <Breadcrumbs aria-label="breadcrumb" className="user-layout-breadcrumbs">
+              <MuiLink component={Link} to="/" underline="hover" color="inherit">
+                Home
+              </MuiLink>
               <MuiLink component={Link} to="/users" underline="hover" color="inherit">
                 Users
               </MuiLink>
@@ -106,12 +111,12 @@ export default function UserLayout() {
                 {user.first_name} {user.last_name}
               </MuiLink>
             </Breadcrumbs>
-            <Typography variant="h4" fontWeight="bold">
+            <Typography variant="h4" component="h1" fontWeight="bold" className="user-layout-title">
               {user.first_name} {user.last_name}
             </Typography>
           </Box>
 
-          <FormControl sx={{ minWidth: 200 }} size="small">
+          <FormControl className="user-layout-mode" size="small">
             <Select value={currentMode} onChange={handleModeChange} displayEmpty>
               <MenuItem value="details">Info</MenuItem>
               <MenuItem value="photos">Gallery</MenuItem>
@@ -120,7 +125,7 @@ export default function UserLayout() {
         </Box>
       </Paper>
 
-      <Box sx={{ flexGrow: 1, display: "flex", flexDirection: "column" }}>
+      <Box className="user-layout-outlet">
         <Outlet context={{ user }} />
       </Box>
     </Box>

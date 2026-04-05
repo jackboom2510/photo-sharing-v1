@@ -4,6 +4,8 @@ import { useParams, useOutletContext } from "react-router-dom";
 import DOMPurify from "dompurify";
 import { api, photoImageUrl } from "../../lib/fetchModelData";
 
+import "./styles.css";
+
 export default function UserDetail() {
   const { userId } = useParams();
   const { user } = useOutletContext();
@@ -35,25 +37,30 @@ export default function UserDetail() {
   const firstPhotoFileName = photos.length > 0 ? photos[0].file_name : undefined;
 
   return (
-    <Paper elevation={3} sx={{ p: 4, borderRadius: 2, display: "flex", flexDirection: "column", flexGrow: 1 }}>
-      <Stack direction={{ xs: "column", sm: "row" }} spacing={4} alignItems={{ xs: "center", sm: "flex-start" }} sx={{ mb: 4 }}>
+    <Paper elevation={3} className="user-detail-paper">
+      <Stack
+        direction={{ xs: "column", sm: "row" }}
+        spacing={{ xs: 2, sm: 4 }}
+        alignItems={{ xs: "center", sm: "flex-start" }}
+        className="user-detail-stack"
+      >
         <Avatar
           alt={`${user.first_name} ${user.last_name}`}
           src={firstPhotoFileName ? photoImageUrl(firstPhotoFileName) : undefined}
-          sx={{ width: 150, height: 150, boxShadow: 3 }}
+          className="user-detail-avatar"
         />
-        <Box sx={{ flex: 1, display: "flex", flexDirection: "column", pt: 1 }}>
-          <Typography variant="h5" fontWeight="medium" gutterBottom>
+        <Box className="user-detail-info">
+          <Typography variant="h5" fontWeight="medium" gutterBottom className="user-detail-name">
             {`${user.first_name} ${user.last_name}`}
           </Typography>
-          <Box sx={{ display: "flex", flexDirection: "column", gap: 1.5 }}>
-            <Typography variant="body1">
+          <Box className="user-detail-meta">
+            <Typography variant="body1" className="user-detail-line">
               <strong>Location:</strong> {user.location}
             </Typography>
-            <Typography variant="body1">
+            <Typography variant="body1" className="user-detail-line">
               <strong>Occupation:</strong> {user.occupation}
             </Typography>
-            <Typography variant="caption" color="text.secondary" sx={{ mt: 1 }}>
+            <Typography variant="caption" color="text.secondary" className="user-detail-caption">
               User ID: {userId} | Photos Found: {loadingPhotos ? "…" : photos.length}
             </Typography>
             {photosError && (
@@ -65,16 +72,16 @@ export default function UserDetail() {
         </Box>
       </Stack>
 
-      <Divider sx={{ mb: 4 }} />
+      <Divider className="user-detail-divider" />
 
-      <Box sx={{ flexGrow: 1 }}>
+      <Box className="user-detail-about">
         <Typography variant="h6" gutterBottom>
           About me
         </Typography>
         <Typography
           variant="body1"
           color="text.secondary"
-          sx={{ lineHeight: 1.8 }}
+          className="user-detail-description"
           dangerouslySetInnerHTML={{
             __html: DOMPurify.sanitize(user.description),
           }}

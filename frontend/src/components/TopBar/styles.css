@@ -1,4 +1,69 @@
-.topbar-appBar {
-  height: 60;
-  justify-content: "center";
+/* Khớp sx AppBar / Toolbar cũ; Stack dùng props MUI cho direction/spacing */
+
+.topbar-app-bar {
+  z-index: 1201;
+  left: 0;
+  right: 0;
+  width: 100%;
+}
+
+.topbar-toolbar {
+  min-height: 56px;
+  padding-left: 12px;
+  padding-right: 12px;
+  flex-wrap: wrap;
+  gap: 4px;
+  align-items: flex-start;
+  padding-top: 8px;
+  padding-bottom: 8px;
+}
+
+@media (min-width: 600px) {
+  .topbar-toolbar {
+    min-height: 64px;
+    padding-left: 16px;
+    padding-right: 16px;
+    gap: 8px;
+    align-items: center;
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+}
+
+.topbar-stack {
+  width: 100%;
+}
+
+.topbar-title {
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+@media (min-width: 600px) {
+  .topbar-title {
+    font-size: 1.25rem;
+  }
+}
+
+.topbar-subtitle {
+  color: rgba(255, 255, 255, 0.92);
+  font-size: 0.8rem;
+  line-height: 1.3;
+  text-align: left;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+@media (min-width: 600px) {
+  .topbar-subtitle {
+    font-size: 1rem;
+    text-align: right;
+    max-width: 52%;
+    -webkit-line-clamp: 1;
+  }
 }

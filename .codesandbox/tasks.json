@@ -1,15 +1,17 @@
 {
-  "$schema": "https://codesandbox.io/schemas/tasks.json",
+  // These tasks will run in order when initializing your CodeSandbox project.
   "setupTasks": [
     {
-      "name": "Install monorepo dependencies",
-      "command": "npm run install:all"
+      "command": "npm run install:all",
+      "name": "Install monorepo dependencies"
     },
     {
-      "name": "Create .env from .env.example",
-      "command": "node scripts/ensure-env.js"
+      "command": "node scripts/ensure-env.js",
+      "name": "Create .env from .env.example"
     }
   ],
+
+  // These tasks can be run from CodeSandbox. Running one will open a log in the app.
   "tasks": {
     "dev": {
       "name": "Dev: API + React",

@@ -10,8 +10,8 @@ import {
   Box,
 } from "@mui/material";
 
-import "./styles.css";
 import { api } from "../../lib/fetchModelData";
+import "./styles.css";
 
 function UserList() {
   const [users, setUsers] = useState([]);
@@ -40,7 +40,7 @@ function UserList() {
 
   if (loading) {
     return (
-      <Box sx={{ display: "flex", justifyContent: "center", p: 4 }}>
+      <Box className="user-list-loading">
         <CircularProgress />
       </Box>
     );
@@ -48,36 +48,42 @@ function UserList() {
 
   if (error) {
     return (
-      <Typography color="error" sx={{ p: 2 }}>
+      <Typography color="error" className="user-list-error">
         Không tải được danh sách người dùng: {error.message}
       </Typography>
     );
   }
 
   return (
-    <div>
-      <Typography variant="body1">
+    <Box className="user-list-root">
+      <Typography variant="body2" className="user-list-intro">
         This is the user list, which takes up 3/12 of the window. You might
         choose to use <a href="https://mui.com/components/lists/">Lists</a>{" "}
         and <a href="https://mui.com/components/dividers/">Dividers</a> to
         display your users like so:
       </Typography>
-      <List component="nav">
+      <List component="nav" dense className="user-list-nav">
         {users.map((item) => (
           <React.Fragment key={item._id}>
-            <ListItem>
-              <Link to={`/users/${item._id}`}>
-                <ListItemText primary={item.first_name} />
+            <ListItem className="user-list-item">
+              <Link to={`/users/${item._id}`} className="user-list-link">
+                <ListItemText
+                  primary={item.first_name}
+                  primaryTypographyProps={{
+                    noWrap: true,
+                    className: "user-list-primary",
+                  }}
+                />
               </Link>
             </ListItem>
             <Divider />
           </React.Fragment>
         ))}
       </List>
-      <Typography variant="body1">
-        Dữ liệu lấy từ API <code>/user/list</code> qua <code>api.userList()</code>.
+      <Typography variant="caption" className="user-list-footer">
+        Dữ liệu từ API <code>/user/list</code> qua <code>api.userList()</code>.
       </Typography>
-    </div>
+    </Box>
   );
 }
 
