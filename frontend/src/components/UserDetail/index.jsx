@@ -21,6 +21,7 @@ export default function UserDetail() {
     api
       .photosOfUser(userId)
       .then((data) => {
+        console.log(data);
         if (!cancelled) setPhotos(Array.isArray(data) ? data : []);
       })
       .catch((e) => {

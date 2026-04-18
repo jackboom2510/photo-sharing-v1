@@ -36,7 +36,10 @@ export default function UserLayout() {
     api
       .user(userId)
       .then((data) => {
-        if (!cancelled) setUser(data || null);
+        if (!cancelled) {
+          console.log(data);
+          setUser(data || null);
+        }
       })
       .catch((e) => {
         if (!cancelled) {

@@ -25,7 +25,9 @@ function UserList() {
     api
       .userList()
       .then((data) => {
-        if (!cancelled) setUsers(Array.isArray(data) ? data : []);
+        if (!cancelled) {
+          setUsers(Array.isArray(data) ? data : []);
+        }
       })
       .catch((e) => {
         if (!cancelled) setError(e);
@@ -68,7 +70,7 @@ function UserList() {
             <ListItem className="user-list-item">
               <Link to={`/users/${item._id}`} className="user-list-link">
                 <ListItemText
-                  primary={item.first_name}
+                  primary={item.first_name || item.last_name}
                   primaryTypographyProps={{
                     noWrap: true,
                     className: "user-list-primary",

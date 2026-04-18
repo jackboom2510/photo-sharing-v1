@@ -9,10 +9,9 @@ const { createProxyMiddleware } = require("http-proxy-middleware");
 module.exports = function setupProxy(app) {
   const fromPort = process.env.SERVER_PORT
     ? `http://localhost:${process.env.SERVER_PORT}`
-    : "";
+    : `http://localhost:8080`;
   const target =
-    process.env.REACT_APP_PROXY_TARGET || fromPort || "http://localhost:3000";
-
+    process.env.REACT_APP_PROXY_TARGET || fromPort || "http://localhost:8080";
   const apiProxy = createProxyMiddleware({
     target,
     changeOrigin: true,
@@ -22,8 +21,9 @@ module.exports = function setupProxy(app) {
     },
   });
 
-  app.use("/user", apiProxy);
-  app.use("/photosOfUser", apiProxy);
-  app.use("/test", apiProxy);
+  app.use("/api/user", apiProxy);
+  app.use("/api/photo/photosOfUser", apiProxy);
+  app.use("/api/photo", apiProxy);
+  app.use("/api/test", apiProxy);
   app.use("/images", apiProxy);
 };
