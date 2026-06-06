@@ -15,8 +15,7 @@
   "tasks": {
     "dev": {
       "name": "Dev: API + React",
-      "command": "HOST=0.0.0.0 npm run start:frontend",
-      "runAtStart": true,
+      "command": "npm run start:frontend",
       "preview": {
         "port": 3000,
         "prLink": "direct"
@@ -32,7 +31,8 @@
     },
     "frontend": {
       "name": "React only (CRA)",
-      "command": "HOST=0.0.0.0 npm run start:frontend",
+      "command": "npm run start:frontend",
+      "runAtStart": true,
       "preview": {
         "port": 3000,
         "prLink": "direct"
