@@ -59,6 +59,33 @@
   -webkit-box-orient: vertical;
 }
 
+.topbar-user-section {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  justify-content: flex-end;
+}
+
+.topbar-greeting {
+  color: rgba(255, 255, 255, 0.92);
+  font-size: 0.9rem;
+  margin: 0;
+}
+
+.topbar-logout-button {
+  color: rgba(255, 255, 255, 0.92);
+  font-size: 0.85rem;
+  padding: 4px 8px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 4px;
+  transition: all 0.2s ease;
+}
+
+.topbar-logout-button:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.5);
+}
+
 @media (min-width: 600px) {
   .topbar-subtitle {
     font-size: 1rem;

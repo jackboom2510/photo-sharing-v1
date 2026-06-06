@@ -57,6 +57,7 @@ const im = {
   _id: "57231f1a30e4351f4e9f4bd7",
   first_name: "Ian",
   last_name: "Malcolm",
+  login_name: "imalcolm",
   location: "Austin, TX",
   description: "Should've stayed in the car.",
   occupation: "Mathematician",
@@ -65,6 +66,7 @@ const er = {
   _id: "57231f1a30e4351f4e9f4bd8",
   first_name: "Ellen",
   last_name: "Ripley",
+  login_name: "eripley",
   location: "Nostromo",
   description: "Lvl 6 rating. Pilot.",
   occupation: "Warrant Officer",
@@ -73,6 +75,7 @@ const pt = {
   _id: "57231f1a30e4351f4e9f4bd9",
   first_name: "Peregrin",
   last_name: "Took",
+  login_name: "ptook",
   location: "Gondor",
   description:
     "Home is behind, the world ahead... " +
@@ -85,6 +88,7 @@ const rk = {
   _id: "57231f1a30e4351f4e9f4bda",
   first_name: "Rey",
   last_name: "Kenobi",
+  login_name: "rkenobi",
   location: "D'Qar",
   description: "Excited to be here!",
   occupation: "Rebel",
@@ -93,6 +97,7 @@ const al = {
   _id: "57231f1a30e4351f4e9f4bdb",
   first_name: "April",
   last_name: "Ludgate",
+  login_name: "aludgate",
   location: "Pawnee, IN",
   description: "Witch",
   occupation: "Animal Control",
@@ -101,6 +106,7 @@ const jo = {
   _id: "57231f1a30e4351f4e9f4bdc",
   first_name: "John",
   last_name: "Ousterhout",
+  login_name: "jousterhout",
   location: "Stanford, CA",
   description: "<i>CS142!</i>",
   occupation: "Professor",
@@ -365,10 +371,58 @@ const userModel = function (userId) {
   return null;
 };
 
+const userByLoginNameModel = function (loginName) {
+  for (let i = 0; i < users.length; i++) {
+    if (users[i].login_name === loginName) {
+      return users[i];
+    }
+  }
+  return null;
+};
+
 const photoOfUserModel = function (userId) {
   return photos.filter(function (photo) {
     return photo.user_id === userId;
   });
+};
+
+const photoModel = function (photoId) {
+  for (let i = 0; i < photos.length; i++) {
+    if (photos[i]._id === photoId) {
+      return photos[i];
+    }
+  }
+  return null;
+};
+
+const addCommentToPhotoModel = function (photoId, userId, commentText) {
+  const photo = photoModel(photoId);
+  if (!photo) {
+    return null;
+  }
+
+  const user = userModel(userId);
+  if (!user) {
+    return null;
+  }
+
+  // Generate a simple unique ID for the comment
+  const newCommentId = "comment_" + Date.now() + "_" + Math.random().toString(36).substr(2, 9);
+
+  const newComment = {
+    _id: newCommentId,
+    date_time: new Date().toISOString(),
+    comment: commentText,
+    user: user,
+    photo_id: photoId,
+  };
+
+  if (!photo.comments) {
+    photo.comments = [];
+  }
+  photo.comments.push(newComment);
+
+  return newComment;
 };
 
 const schemaModel = function () {
@@ -378,7 +432,10 @@ const schemaModel = function () {
 const models = {
   userListModel: userListModel,
   userModel: userModel,
+  userByLoginNameModel: userByLoginNameModel,
   photoOfUserModel: photoOfUserModel,
+  photoModel: photoModel,
+  addCommentToPhotoModel: addCommentToPhotoModel,
   schemaInfo: schemaModel,
 };
 

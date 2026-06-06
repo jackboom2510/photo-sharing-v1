@@ -16,14 +16,13 @@ module.exports = function setupProxy(app) {
     target,
     changeOrigin: true,
     logLevel: "warn",
-    onProxyReq(proxyReq) {
-      proxyReq.removeHeader("cookie");
-    },
+    ws: true,
   });
 
-  app.use("/api/user", apiProxy);
-  app.use("/api/photo/photosOfUser", apiProxy);
-  app.use("/api/photo", apiProxy);
-  app.use("/api/test", apiProxy);
+  app.use("/admin/", apiProxy);
+  app.use("/user/", apiProxy);
+  app.use("/photosOfUser/", apiProxy);
+  app.use("/commentsOfPhoto/", apiProxy);
+  app.use("/test/", apiProxy);
   app.use("/images", apiProxy);
 };

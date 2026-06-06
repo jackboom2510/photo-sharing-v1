@@ -6,13 +6,14 @@ import {
 	Grid,
 	Checkbox,
 	FormControlLabel,
+	Button,
 } from "@mui/material";
 import { useLocation } from "react-router-dom";
 import { api } from "../../lib/fetchModelData";
 
 import "./styles.css";
 
-function TopBar() {
+function TopBar({ currentUser, onLogout }) {
 	const location = useLocation();
 	const segments = location.pathname.split("/");
 	const userId = segments[2] || null;
@@ -53,6 +54,15 @@ function TopBar() {
 		window.dispatchEvent(new Event("advancedToggle"));
 	};
 
+	const handleLogout = async () => {
+		try {
+			await api.logout();
+			onLogout();
+		} catch (err) {
+			console.error("Logout error:", err);
+		}
+	};
+
 	const subtitle = user
 		? `${isPhotos ? "Photos of " : ""}${user.first_name} ${user.last_name}`
 		: "";
@@ -84,6 +94,25 @@ function TopBar() {
 					</Grid>
 
 					<Grid item xs={4} textAlign="right">
+						{currentUser ? (
+							<div className="topbar-user-section">
+								<Typography variant="subtitle1" className="topbar-greeting">
+									Hi {currentUser.first_name}
+								</Typography>
+								<Button
+									color="inherit"
+									size="small"
+									onClick={handleLogout}
+									className="topbar-logout-button"
+								>
+									Logout
+								</Button>
+							</div>
+						) : (
+							<Typography variant="subtitle1" className="topbar-subtitle">
+								Please Login
+							</Typography>
+						)}
 						{subtitle && (
 							<Typography variant="subtitle1" className="topbar-subtitle">
 								{subtitle}

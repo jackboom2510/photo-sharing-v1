@@ -12,8 +12,10 @@ import {
 	Button,
 	Stack,
 	IconButton,
+	TextField,
+	Alert,
 } from "@mui/material";
-import { ArrowBack, ArrowForward, ContentCopy } from "@mui/icons-material";
+import { ArrowBack, ArrowForward, ContentCopy, Send } from "@mui/icons-material";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import DOMPurify from "dompurify";
 import { api, photoImageUrl } from "../../lib/fetchModelData";
@@ -30,6 +32,9 @@ export default function UserPhotos() {
 	const [photos, setPhotos] = useState([]);
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState(null);
+	const [commentText, setCommentText] = useState("");
+	const [commentLoading, setCommentLoading] = useState(false);
+	const [commentError, setCommentError] = useState("");
 
 	let index = parseInt(photoIndex || 0);
 
@@ -83,6 +88,39 @@ export default function UserPhotos() {
 			cancelled = true;
 		};
 	}, [userId]);
+
+	const handleAddComment = async (e) => {
+		e.preventDefault();
+		
+		if (!commentText.trim()) {
+			setCommentError("Comment cannot be empty");
+			return;
+		}
+
+		setCommentLoading(true);
+		setCommentError("");
+
+		try {
+			const newComment = await api.addComment(currentPhoto._id, commentText);
+			
+			// Update the photos state with the new comment
+			const updatedPhotos = photos.map((photo) => {
+				if (photo._id === currentPhoto._id) {
+					return {
+						...photo,
+						comments: [...(photo.comments || []), newComment],
+					};
+				}
+				return photo;
+			});
+			setPhotos(updatedPhotos);
+			setCommentText("");
+		} catch (err) {
+			setCommentError(err.body?.error || "Failed to add comment");
+		} finally {
+			setCommentLoading(false);
+		}
+	};
 
 	if (!userId) return null;
 
@@ -203,6 +241,41 @@ export default function UserPhotos() {
 									</Box>
 								))}
 							</Stack>
+
+							<Divider sx={{ my: 2 }} />
+
+							<Typography variant="subtitle2" fontWeight={600} sx={{ mb: 1 }}>
+								Add a Comment
+							</Typography>
+
+							{commentError && (
+								<Alert severity="error" sx={{ mb: 2 }}>
+									{commentError}
+								</Alert>
+							)}
+
+							<Box component="form" onSubmit={handleAddComment} sx={{ display: "flex", gap: 1 }}>
+								<TextField
+									fullWidth
+									multiline
+									maxRows={4}
+									placeholder="Write a comment..."
+									value={commentText}
+									onChange={(e) => setCommentText(e.target.value)}
+									disabled={commentLoading}
+									size="small"
+									variant="outlined"
+								/>
+								<Button
+									variant="contained"
+									endIcon={<Send />}
+									onClick={handleAddComment}
+									disabled={commentLoading || !commentText.trim()}
+									sx={{ alignSelf: "flex-end" }}
+								>
+									{commentLoading ? "..." : "Post"}
+								</Button>
+							</Box>
 						</CardContent>
 					</Card>
 

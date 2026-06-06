@@ -1,0 +1,12 @@
+.login-register-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 20px;
+}
+
+.login-register-paper {
+  min-width: 100%;
+  max-width: 100%;
+}
